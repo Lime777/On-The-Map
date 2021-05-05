@@ -78,10 +78,11 @@ class AuthorizationLogin {
             }
             do {
                 let decoder = try JSONDecoder().decode(Results.self, from: data)
-                decoder.results.forEach { location in
-                    print("EMIL, THIS IS THE LOCATION: \(location.latitude) & \(location.longitude)")
-                }
+                //                decoder.results.forEach { location in
+                //                    print("EMIL, THIS IS THE LOCATION: \(location.latitude) & \(location.longitude)")
                 
+                //                }
+                completion(decoder.results, nil)
             } catch {
                 print("Get student location function error: \(error.localizedDescription)")
                 completion([], error)

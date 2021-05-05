@@ -9,29 +9,31 @@ import Foundation
 import UIKit
 import MapKit
 
-class MapKitViewController: UIViewController, MKMapViewDelegate {
-   
+class MapKitViewController: UIViewController {
+    
     
     @IBOutlet weak var mapView: MKMapView!
+    
    
-    let annotation = MKPointAnnotation()
- 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         AuthorizationLogin.getStudentLocation(completion: handleStudentLocation(location:error:)
-                    )
+        )
     }
     func handleStudentLocation(location: [StudentLocationStruct], error: Error?) {
-       
-        annotation.coordinate = CLLocationCoordinate2D(latitude: 34 , longitude: -118.2565)
-        mapView.addAnnotation(annotation)
-        
-        
-    }
-  
-    }
+        DispatchQueue.main.async {
+            for locations in location {
+                let annotation = MKPointAnnotation()
+                let latitude =  CLLocationDegrees(locations.latitude)
+                let longitude = CLLocationDegrees(locations.longitude)
+                annotation.coordinate = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+                self.mapView.addAnnotation(annotation)
 
- 
+            }
+        }
+    }
+}
 
 
