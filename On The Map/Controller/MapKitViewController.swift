@@ -11,29 +11,32 @@ import MapKit
 
 class MapKitViewController: UIViewController {
     
-    
     @IBOutlet weak var mapView: MKMapView!
-    
-   
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AuthorizationLogin.getStudentLocation(completion: handleStudentLocation(location:error:)
-        )
+        AuthorizationLogin.getStudentLocation(completion: handleStudentInformation(id:error:))
     }
-    func handleStudentLocation(location: [StudentLocationStruct], error: Error?) {
+    func handleStudentInformation(id: [StudentIdStruct], error: Error?) {
         DispatchQueue.main.async {
-            for locations in location {
+            for information in id {
                 let annotation = MKPointAnnotation()
-                let latitude =  CLLocationDegrees(locations.latitude)
-                let longitude = CLLocationDegrees(locations.longitude)
+            
+                let latitude =  CLLocationDegrees(information.latitude)
+                let longitude = CLLocationDegrees(information.longitude)
                 annotation.coordinate = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+                annotation.title = information.firstName
+                annotation.subtitle = information.lastName
                 self.mapView.addAnnotation(annotation)
+//              print("Testing out First names: \(information.firstName)")
 
             }
         }
     }
+}
+
+extension MapKitViewController: MKMapViewDelegate {
+
 }
 
 

@@ -38,6 +38,7 @@ class AuthorizationLogin {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         // encoding a JSON body from a string, can also use a Codable struct
         request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: .utf8)
+        
         print(username)
         print(password)
         let session = URLSession.shared
@@ -69,7 +70,7 @@ class AuthorizationLogin {
         task.resume()
     }
     
-    class func getStudentLocation(completion: @escaping ([StudentLocationStruct], Error?) -> Void) {
+    class func getStudentLocation(completion: @escaping ([StudentIdStruct], Error?) -> Void) {
         let request = URLRequest(url: AuthorizationLogin.Endpoint.studentLocation.url)
         let sessionTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {

@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 struct Results: Codable {
-    let results: [StudentLocationStruct]
+    let results: [StudentIdStruct]
 }
-struct StudentLocationStruct: Codable {
+struct StudentIdStruct: Codable {
  
         let createdAt: String
         let firstName: String

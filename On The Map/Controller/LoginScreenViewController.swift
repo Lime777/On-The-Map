@@ -11,8 +11,10 @@ class LoginScreenViewController: UIViewController {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.isHidden = true
         // Do any additional setup after loading the view.
         usernameTextField.layer.borderWidth = 1
         passwordTextField.layer.borderWidth = 1
@@ -22,16 +24,37 @@ class LoginScreenViewController: UIViewController {
     }
     
     @IBAction func loginButton(_ sender: Any) {
+        
+        loginChecker()
         AuthorizationLogin.login(username: self.usernameTextField.text ?? "", password: self.passwordTextField.text ?? "", completion: loginRequestHandler(success:error:))
         }
-    }
+    
     func loginRequestHandler(success: Bool, error: Error?) {
         if success {
-            print("SUCCESSFUL")
+            print("Succesful")
         } else {
-            print("Not working!!!!! Check line 32")
+            
+            func shouldPerformSegue(withIdentifier identifier: String,
+                                    sender: Any?) -> Bool {
+                if identifier == "firstSegue" {
+                    print("NOT SUCCESSFUL")
+                }
+                return false
+            }
+        }
+    }
+    
+    func loginChecker() {
+        if (usernameTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)!  {
+            let alert = UIAlertController(title: "Enter Username and Password", message: "Click OK to continue", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                return
+            }))
+           
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
-
+}
 
