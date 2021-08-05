@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class AuthorizationLogin {
+class AuthorizationLogin: UIViewController {
     
     enum Endpoint {
         
@@ -63,8 +63,9 @@ class AuthorizationLogin {
                 print("Account Registered = \(accountRegistered)")
                 completion(true, nil)
             } catch {
-                print(error.localizedDescription)
+                print("Error:  \(error.localizedDescription)")
                 completion(false, error)
+                
             }
         }
         task.resume()

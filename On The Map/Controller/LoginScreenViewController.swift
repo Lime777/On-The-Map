@@ -8,7 +8,7 @@
 import UIKit
 
 class LoginScreenViewController: UIViewController {
-
+    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -21,28 +21,40 @@ class LoginScreenViewController: UIViewController {
         usernameTextField.layer.borderColor = UIColor.systemBlue.cgColor
         passwordTextField.layer.borderColor = UIColor.systemBlue.cgColor
         print(AuthorizationLogin.Endpoint.udacityLogin.url)
+        
     }
     
     @IBAction func loginButton(_ sender: Any) {
         
         loginChecker()
         AuthorizationLogin.login(username: self.usernameTextField.text ?? "", password: self.passwordTextField.text ?? "", completion: loginRequestHandler(success:error:))
-        }
+    }
     
     func loginRequestHandler(success: Bool, error: Error?) {
         if success {
             print("Succesful")
         } else {
             
-            func shouldPerformSegue(withIdentifier identifier: String,
-                                    sender: Any?) -> Bool {
-                if identifier == "firstSegue" {
-                    print("NOT SUCCESSFUL")
-                }
-                return false
-            }
+            let alert = UIAlertController(title: "Incorrect Username or Password", message: "Enter Again", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                return
+            }))
+            
+                self.present(alert, animated: true, completion: nil)
+          
         }
+        
+        //                    func shouldPerformSegue(withIdentifier identifier: String,
+        //                                            sender: Any?) -> Bool {
+        //                        if identifier == "firstSegue" {
+        //                            print("NOT SUCCESSFUL")
+        //                        }
+        //                        return false
     }
+    
+    
+    
+    
     
     func loginChecker() {
         if (usernameTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)!  {
@@ -51,10 +63,8 @@ class LoginScreenViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                 return
             }))
-           
+            
             self.present(alert, animated: true, completion: nil)
         }
     }
-
 }
-
