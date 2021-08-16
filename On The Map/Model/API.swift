@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class AuthorizationLogin: UIViewController {
+class AuthorizationLogin {
     
     enum Endpoint {
         
@@ -31,7 +31,7 @@ class AuthorizationLogin: UIViewController {
         }
     }
     
-    class func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+    class func login(username: String, password: String, completion: @escaping (Bool, Error?) -> Void)  {
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -42,10 +42,12 @@ class AuthorizationLogin: UIViewController {
         print(username)
         print(password)
         let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            if error != nil { // Handle error…
+        let task = session.dataTask(with: request) { data, response, error  in
+            if  error != nil { // Handle error…
+              
                 return
                     completion(false, error)
+                
             }
             let range = (5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
@@ -64,7 +66,7 @@ class AuthorizationLogin: UIViewController {
                 completion(true, nil)
             } catch {
                 print("Error:  \(error.localizedDescription)")
-                completion(false, error)
+               completion(false, error)
                 
             }
         }

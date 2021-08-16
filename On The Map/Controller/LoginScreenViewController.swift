@@ -24,34 +24,26 @@ class LoginScreenViewController: UIViewController {
         
     }
     
-    @IBAction func loginButton(_ sender: Any) {
+    @IBAction func loginButton(_ sender: Any)  {
         
+        
+         AuthorizationLogin.login(username: self.usernameTextField.text ?? "", password: self.passwordTextField.text ?? "", completion:  loginRequestHandler(success:error:))
         loginChecker()
-        AuthorizationLogin.login(username: self.usernameTextField.text ?? "", password: self.passwordTextField.text ?? "", completion: loginRequestHandler(success:error:))
     }
     
-    func loginRequestHandler(success: Bool, error: Error?) {
-        if success {
+    func loginRequestHandler(success: Bool, error: Error?)   {
+        
+        if  success {
             print("Succesful")
-        } else {
-            
-            let alert = UIAlertController(title: "Incorrect Username or Password", message: "Enter Again", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+        } else if error != nil {
+            let errorAlert = UIAlertController(title: "username or password is incorrect", message: "Click Ok to try again", preferredStyle: .alert)
+            errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                 return
             }))
-            
-                self.present(alert, animated: true, completion: nil)
-          
+            self.present(errorAlert, animated: true, completion: nil)
         }
-        
-        //                    func shouldPerformSegue(withIdentifier identifier: String,
-        //                                            sender: Any?) -> Bool {
-        //                        if identifier == "firstSegue" {
-        //                            print("NOT SUCCESSFUL")
-        //                        }
-        //                        return false
     }
-    
+
     
     
     
